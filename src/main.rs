@@ -18,13 +18,13 @@ extern crate hyper_native_tls;
 
 mod elo;
 mod player;
-mod gameresult;
+mod setresult;
 mod utils;
 mod discord;
 
 use elo::{Elo, EloRanking};
 use player::Player;
-use gameresult::GameResult;
+use setresult::SetResult;
 
 use iron::prelude::*;
 use iron::status;
@@ -127,18 +127,18 @@ fn update_player(player: Player,
     let _ : () = conn.hset("players", player.get_name(), json::encode(&player).unwrap()).unwrap();
 }
 
-fn add_result(result: GameResult,
+fn add_result(result: SetResult,
               conn: PooledConnection<RedisConnectionManager>) {
     let _ : () = conn.lpush("results", json::encode(&result).unwrap()).unwrap();
 }
 
 fn get_results(count: isize,
                conn: PooledConnection<RedisConnectionManager>)
-               -> Vec<GameResult> {
+               -> Vec<SetResult> {
     let result: Vec<String> = conn.lrange("results", 0, count).unwrap();
-    let mut results: Vec<GameResult> = vec!();
+    let mut results: Vec<SetResult> = vec!();
     for enc in result {
-        results.push(json::decode::<GameResult>(&enc).unwrap());
+        results.push(json::decode::<SetResult>(&enc).unwrap());
     }
     results
 }

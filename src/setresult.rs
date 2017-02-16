@@ -7,7 +7,7 @@ use utils;
 // both builtin Rust things?  Super annoying.
 
 #[derive(RustcDecodable, RustcEncodable, Default)]
-pub struct GameResult {
+pub struct SetResult {
     time: String, // TODO Rust time object? serialization?
     winner: String, // TODO Player struct? any benefit?
     loser: String,
@@ -18,9 +18,9 @@ pub struct GameResult {
     notes: Option<String>
 }
 
-impl GameResult {
-    pub fn new(winner: &String, loser: &String) -> GameResult {
-        GameResult {
+impl SetResult {
+    pub fn new(winner: &String, loser: &String) -> SetResult {
+        SetResult {
             time: utils::get_current_time(),
             winner: winner.clone(),
             loser: loser.clone(),
@@ -28,8 +28,8 @@ impl GameResult {
         }
     }
 
-    pub fn new_with_time(time: &String, winner: &String, loser: &String) -> GameResult {
-        GameResult {
+    pub fn new_with_time(time: &String, winner: &String, loser: &String) -> SetResult {
+        SetResult {
             time: time.clone(),
             winner: winner.clone(),
             loser: loser.clone(),
