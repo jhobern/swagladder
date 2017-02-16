@@ -5,7 +5,7 @@ use std::cmp::Ordering;
 pub struct Player {
     name: String,
     rating: f32,
-    games: u64,
+    sets: u64,
     wins: u64,
     losses: u64,
     rank: Option<u64>
@@ -16,7 +16,7 @@ impl Player {
         Player {
             name: name,
             rating: 1000f32,
-            games: 0,
+            sets: 0,
             wins: 0,
             losses: 0,
             ..Default::default()
@@ -27,8 +27,8 @@ impl Player {
         &self.name
     }
 
-    pub fn get_games(&self) -> u64 {
-        self.games
+    pub fn get_sets(&self) -> u64 {
+        self.sets
     }
 
     pub fn get_wins(&self) -> u64 {
@@ -68,7 +68,7 @@ impl Elo for Player {
     }
 
     fn change_rating(&mut self, rating: f32) {
-        self.games += 1;
+        self.sets += 1;
         if rating > 0f32 {
             self.wins += 1;
         } else {
